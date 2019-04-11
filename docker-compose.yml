@@ -7,11 +7,12 @@ services:
             - 15672:15672
     host1:
         container_name: host1
-        build: ./host1
+        build: ./host1/docker
         ports:
-            - "3001:3001"
+            - 3001:3001
         volumes:
-            - ../host1/:/var/www/host1
+            - ./host1/src:/var/www/host1/src
+            - ./host1/docker/php.ini:/usr/local/etc/php/conf.d/custom.ini
 #     host2:
 #        container_name: host2
 #        image:

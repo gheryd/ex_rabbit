@@ -1,0 +1,12 @@
+{
+    "name": "root/host1",
+    "authors": [
+        {
+            "name": "gheryd",
+            "email": "gheryd@mail.it"
+        }
+    ],
+    "require": {
+        "php-amqplib/php-amqplib": "^2.9"
+    }
+}
