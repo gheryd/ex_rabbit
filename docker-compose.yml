@@ -9,10 +9,11 @@ services:
         container_name: host1
         build: ./host1/docker
         ports:
-            - 3001:3001
+            - 3001:80
         volumes:
-            - ./host1/src:/var/www/host1/src
+            - ./host1/src:/var/www/host1
             - ./host1/docker/php.ini:/usr/local/etc/php/conf.d/custom.ini
+            - ./host1/docker/apache_host1.conf:/etc/apache2/sites-enabled/host1.conf
 #     host2:
 #        container_name: host2
 #        image:
