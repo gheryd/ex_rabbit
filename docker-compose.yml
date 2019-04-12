@@ -14,10 +14,9 @@ services:
             - ./host1/src:/var/www/host1
             - ./host1/docker/php.ini:/usr/local/etc/php/conf.d/custom.ini
             - ./host1/docker/apache_host1.conf:/etc/apache2/sites-enabled/host1.conf
-#     host2:
-#        container_name: host2
-#        image:
-#        ports:
-#            - "3002:3002"
-#        volumes:
-#             - ../hosts2/:/var/www/host2
+     host2:
+        container_name: host2
+        ports:
+            - 3002:3002
+        volumes:
+            - ./hosts2/src/server:/usr/src/app
