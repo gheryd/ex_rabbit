@@ -1,13 +1,11 @@
-FROM node:10.15
+FROM node:8
 
-WORKDIR /usr/src/app
+RUN mkdir /src
+WORKDIR /src
 
-# COPY package*.json ./
+COPY ./package.json /src/package.json
+COPY ./package-lock.json /src/package-lock.json
 
-# RUN npm 
+RUN npm install
 
-# RUN npm install
-
-# COPY . .
-
-# CMD ["npm", "start"]
+CMD ["node", "server/index.js"]
