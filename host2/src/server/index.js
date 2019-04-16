@@ -1,23 +1,21 @@
-const testFolder = './';
-console.log("gheryd: ", "current folder");
-const fs = require('fs');
-fs.readdir(testFolder, (err, files) => {
-  files.forEach(file => {
-    console.log("gheryd: ----------> ", file);
-  });
-});
-
-const express = require('express');
+const webServer = require('./web');
+const sendMQ = require('./sendMQ');
+const receiveMQ = require('./receiveMQ');
 
 // Constants
 const PORT = 80;
 const HOST = '0.0.0.0';
+const URL_RABBIT = 'amqp://host_rmq';
+const QUEUE_RABBIT = 'hello';
 
-// App
-const app = express();
-app.get('/', (req, res) => {
-  res.send('Hello world\n');
+webServer(HOST, PORT, async function(msg){
+    try{
+        let r = await sendMQ(URL_RABBIT, QUEUE_RABBIT, msg);
+        return {result:'ok', message: msg};
+    }catch(error){
+        return {result:'ko', message: msg, error: error.message};
+    }
 });
 
-app.listen(PORT, HOST);
-console.log(`Running on http://${HOST}:${PORT}`);
+ 
+receiveMQ(URL_RABBIT, QUEUE_RABBIT);

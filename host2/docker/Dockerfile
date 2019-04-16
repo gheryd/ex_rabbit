@@ -6,7 +6,8 @@ WORKDIR /src
 COPY ./package.json /src/package.json
 COPY ./package-lock.json /src/package-lock.json
 
-RUN npm install amqplib
-RUN npm install
+RUN npm install -g nodemon && \
+    npm install -g json-server && \
+    npm i
 
-CMD ["node", "server/index.js"]
+CMD ["nodemon", "server/index.js"]
