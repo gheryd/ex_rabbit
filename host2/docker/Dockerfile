@@ -1,13 +1,13 @@
 FROM node:8
 
-RUN mkdir /src
-WORKDIR /src
+RUN mkdir /app
+WORKDIR /app
 
-COPY ./package.json /src/package.json
-COPY ./package-lock.json /src/package-lock.json
+COPY ./package.json /app/package.json
+COPY ./package-lock.json /app/package-lock.json
 
 RUN npm install -g nodemon && \
-    npm install -g json-server && \
+    npm install json-server --save-dev  && \
     npm i
 
 CMD ["nodemon", "server/index.js"]

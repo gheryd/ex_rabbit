@@ -1,0 +1,22 @@
+{
+  "messages": [
+    {
+      "id": 1,
+      "host": "none",
+      "message": "first message",
+      "queue": "none"
+    },
+    {
+      "message": "test1",
+      "host": "host2",
+      "queue": "hello",
+      "id": 2
+    },
+    {
+      "message": "test1",
+      "host": "host2",
+      "queue": "hello",
+      "id": 3
+    }
+  ]
+}

@@ -20,5 +20,16 @@ services:
         build: ./host2/docker
         ports:
             - 3002:80
+            - 3012:3000
+        environment:
+            - WEB_PORT=80
+            - WEB_HOST=0.0.0.0
+            - MQ_URL=amqp://host_rmq
+            - MQ_QUEUE=hello
+            - DB_HOST=0.0.0.0
+            - DB_PORT=3000
+            - DB_FILE=/app/data/db/db.json
+            - HOST=host2
         volumes:
-            - ./host2/src/server:/src/server
+            - ./host2/src/server:/app/server
+            - ./host2/data:/app/data

@@ -1,26 +1,28 @@
 var amqp = require('amqplib');
 
 
-const createHandler = (channel) => (msg) => {
-      if( msg!==null){
-          console.log(`[receiveMQ] received message:\n`, msg);
-          console.log(msg.content.toString());
-          channel.ack(msg);
-      }else {
-          console.warn("[receiveMQ] msg is null");
-      }
-  };
+const createHandler = (channel, callback) => (msg) => {
+    if( msg!==null){
+        console.log(`[receiveMQ] received message:\n`, msg);
+        const content = msg.content.toString();
+        console.log("[receiveMQ] content:", content);
+        channel.ack(msg);
+        callback(content);
+    }else {
+        console.warn("[receiveMQ] msg is null");
+    }
+};
 
 
-module.exports = async function(url, queue){
+module.exports = async function(url, queue, callback){
     let q = queue;
     try{
         let conn = await amqp.connect(url);
         var channel = await conn.createChannel();
         var ok = await channel.assertQueue(q);
-        channel.consume(q, createHandler(channel));
+        channel.consume(q, createHandler(channel, callback));
     }catch(err){
-        console.error("catch error from receiveMQ");
+        console.error("[receiveMQ] catch error from receiveMQ");
         throw err;
     }
 
