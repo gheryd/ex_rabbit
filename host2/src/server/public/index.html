@@ -2,20 +2,51 @@
 <html>
 <head>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.0.js" integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
     <script src="./main.js"></script>
 </head>
 <body>
     <div class="container">
         <h1>RabbitMQ & NodeJS</h1>
-        
-        <div id="sendMessageForm">
-            <div class="form-group">
-                <label >message:</label>
-                <input name="message" type="text" class="form-control"/>
+        <div class="row">
+            <div class="col">
+                <div id="sendMessageForm" class="card">
+                    <div class="form-group card-body">
+                        <label >message:</label>
+                        <input name="message" type="text" class="form-control"/>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary float-right">send</button>
+                    </div>
+                </div>
             </div>
-            <div>
-                <button type="submit" class="btn btn-primary">send</button>
+            
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <button id="refreshMessageList" class="btn btn-primary btn-sm float-right"><i class="fas fa-redo"></i></button>
+                        <span>message log</span>
+                    </div>
+                    <div class="card-body">
+                        <table id="messageList" class="table table-sm table-dark table-striped table-hover" style="font-size:0.7em;">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>host</th>
+                                    <th>message</th>
+                                    <th>queue</th>
+                                    <th>date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+    
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>

@@ -29,6 +29,7 @@ services:
             - DB_HOST=0.0.0.0
             - DB_PORT=3000
             - DB_FILE=/app/data/db/db.json
+            - DB_HOST=http://host2
             - HOST=host2
         volumes:
             - ./host2/src/server:/app/server

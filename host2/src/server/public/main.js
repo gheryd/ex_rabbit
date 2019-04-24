@@ -5,6 +5,16 @@ var me = {};
 $(function(){
 
     var msgForm = comps.msgForm($('#sendMessageForm'));
+    var messageListComp = comps.messageList( $('#messageList') );
+    
+    $("#refreshMessageList").click(()=>{
+        $.ajax({
+            'url': '/service/get_messages',
+            method: 'GET'
+        }).done( (list)=> {
+            messageListComp.setList(list);
+        });
+    });
 
 });
 
@@ -32,7 +42,25 @@ comps.msgForm = function($box){
     return comp;
 };
 
+comps.messageList = function($table){
+    let comp = {};
+    const $tbody = $table.find("tbody");
 
+    comp.setList = list => {
+        $tbody.empty();
+        list.forEach(item => {
+            $tbody.append(
+                $("<tr>").append($('<td>').text(item.id) )
+                .append($('<td>').text(item.host) )
+                .append($('<td>').text(item.message) )
+                .append($('<td>').text(item.queue) )
+                .append($('<td>').text(item.date) )
+            );
+        });
+    };
+
+    return comp;
+};
 
 return me;
 
