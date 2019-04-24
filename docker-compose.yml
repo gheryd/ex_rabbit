@@ -15,6 +15,15 @@ services:
             - ./host1/src:/var/www/host1
             - ./host1/docker/php.ini:/usr/local/etc/php/conf.d/custom.ini
             - ./host1/docker/apache_host1.conf:/etc/apache2/sites-enabled/host1.conf
+        environment:
+            - DB_HOST=http://host2
+            - DB_PORT=3000
+            - MQ_HOST=host_rmq
+            - MQ_QUEUE=hello
+            - MQ_PORT=5672
+            - MQ_USER=guest
+            - MQ_PASSWORD=guest
+            - HOST=host1
     host2:
         container_name: host2
         build: ./host2/docker
