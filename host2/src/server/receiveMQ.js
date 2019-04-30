@@ -22,8 +22,7 @@ module.exports = async function(url, queue, callback){
         var ok = await channel.assertQueue(q);
         channel.consume(q, createHandler(channel, callback));
     }catch(err){
-        console.error("[receiveMQ] catch error from receiveMQ");
-        throw err;
+        console.error("[receiveMQ] catch error from receiveMQ", err);
     }
 
 };
