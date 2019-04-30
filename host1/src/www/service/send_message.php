@@ -18,11 +18,7 @@ $dbRow = [
         "date" => date("Y-m-d H:i:s")
 ];
 
-echo "queue: ".MQ_QUEUE;
-
 $payload = http_build_query($dbRow);
-
-
 
 sendMessageMQ($message);
 sendReq($url, 'POST', $payload);
