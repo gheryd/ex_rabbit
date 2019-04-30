@@ -9,16 +9,22 @@ $message = $_POST['message'];
 // ---------------------------------------------------
 
 
-$url = DB_HOST.":".DB_PORT."/service/send_message";
+$url = DB_HOST.":".DB_PORT."/messages";
 
-$payload = json_encode([ 
+$dbRow = [ 
         "message" => $message, 
         "host" => HOST, 
         "queue" => MQ_QUEUE, 
-        "date" => date()
-]);
+        "date" => date("Y-m-d H:i:s")
+];
+
+echo "queue: ".MQ_QUEUE;
+
+$payload = http_build_query($dbRow);
+
+
 
 sendMessageMQ($message);
 sendReq($url, 'POST', $payload);
 
-echo $result;
+echo json_encode(['sent'=>$dbRow]);

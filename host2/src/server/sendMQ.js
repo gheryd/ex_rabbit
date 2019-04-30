@@ -12,12 +12,14 @@ module.exports = async function(url, queue, msg){
       var conn = await amqp.connect(url);
       var channel = await conn.createChannel();
       var ok = await channel.assertQueue(q);
-      console.log("assertQueue", ok);
+      
+      console.log("[sendMQ] assertQueue", ok);
+
       var send = await channel.sendToQueue(q, Buffer.from(msg));
       return send;
 
     }catch(err){
-      console.error("catch error from sendMQ");
+      console.error("[sendMQ] catch error from sendMQ");
       throw err;
     }
   

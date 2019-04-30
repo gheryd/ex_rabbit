@@ -31,6 +31,9 @@ services:
             - MQ_USER=guest
             - MQ_PASSWORD=guest
             - HOST=host1
+        links:
+            - host_rmq
+            - host2
     # NodeJS
     host2:
         container_name: host2
@@ -40,6 +43,8 @@ services:
             - 3002:80
             # db json server http://localhost:3012
             - 3012:3000
+        expose:
+            - 3000
         depends_on:
             - host_rmq
         environment:
@@ -55,3 +60,5 @@ services:
         volumes:
             - ./host2/src/server:/app/server
             - ./host2/data:/app/data
+        links:
+            - host_rmq
