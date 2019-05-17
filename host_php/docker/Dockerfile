@@ -10,7 +10,7 @@ RUN docker-php-ext-install \
         sockets \
         bcmath
 
-WORKDIR /var/www/host1
+WORKDIR /var/www/host_php
 COPY ./composer.json .
 COPY ./composer.lock .
 #RUN composer require php-amqplib/php-amqplib

@@ -10,34 +10,34 @@ services:
             # RabbitMQ web site management http://localhost:15672 (guest:guest)
             - 15672:15672
     # PHP
-    host1:
-        container_name: host1
-        build: ./host1/docker
+    host_php:
+        container_name: host_php
+        build: ./host_php/docker
         ports:
             # web page http://localhost:3001
             - 3001:80
         volumes:
-            - ./host1/src:/var/www/host1
-            - ./host1/docker/php.ini:/usr/local/etc/php/conf.d/custom.ini
-            - ./host1/docker/apache_host1.conf:/etc/apache2/sites-enabled/host1.conf
+            - ./host_php/src:/var/www/host_php
+            - ./host_php/docker/php.ini:/usr/local/etc/php/conf.d/custom.ini
+            - ./host_php/docker/apache_host_php.conf:/etc/apache2/sites-enabled/host_php.conf
         depends_on:
             - host_rmq
         environment:
-            - DB_HOST=http://host2
+            - DB_HOST=http://host_nodejs
             - DB_PORT=3000
             - MQ_HOST=host_rmq
             - MQ_QUEUE=hello
             - MQ_PORT=5672
             - MQ_USER=guest
             - MQ_PASSWORD=guest
-            - HOST=host1
+            - HOST=host_php
         links:
             - host_rmq
-            - host2
+            - host_nodejs
     # NodeJS
-    host2:
-        container_name: host2
-        build: ./host2/docker
+    host_nodejs:
+        container_name: host_nodejs
+        build: ./host_nodejs/docker
         ports:
             # db web page http://localhost:3002
             - 3002:80
@@ -55,10 +55,10 @@ services:
             - DB_HOST=0.0.0.0
             - DB_PORT=3000
             - DB_FILE=/app/data/db/db.json
-            - DB_HOST=http://host2
-            - HOST=host2
+            - DB_HOST=http://host_nodejs
+            - HOST=host_nodejs
         volumes:
-            - ./host2/src/server:/app/server
-            - ./host2/data:/app/data
+            - ./host_nodejs/src/server:/app/server
+            - ./host_nodejs/data:/app/data
         links:
             - host_rmq
