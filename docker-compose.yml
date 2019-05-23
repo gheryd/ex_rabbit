@@ -9,6 +9,19 @@ services:
             - 5672:5672
             # RabbitMQ web site management http://localhost:15672 (guest:guest)
             - 15672:15672
+    # Redis
+    host_redis:
+        container_name: host_redis
+        image: 'bitnami/redis:latest'
+        port: 
+            - 6379:6379
+        expose:
+            - 6379
+        #volumes:
+            # redis persistence
+            #- ./host_redis/data:/bitnami/redis/data
+        environment:
+            - ALLOW_EMPTY_PASSWORD=yes
     # PHP
     host_php:
         container_name: host_php
@@ -22,18 +35,16 @@ services:
             - ./host_php/docker/apache_host_php.conf:/etc/apache2/sites-enabled/host_php.conf
         depends_on:
             - host_rmq
+            - host_redis
         environment:
-            - DB_HOST=http://host_nodejs
-            - DB_PORT=3000
             - MQ_HOST=host_rmq
             - MQ_QUEUE=hello
             - MQ_PORT=5672
             - MQ_USER=guest
             - MQ_PASSWORD=guest
             - HOST=host_php
-        links:
-            - host_rmq
-            - host_nodejs
+            - REDIS_HOST=host_redis
+            - REDIS_PORT=6379
     # NodeJS
     host_nodejs:
         container_name: host_nodejs
@@ -47,18 +58,14 @@ services:
             - 3000
         depends_on:
             - host_rmq
+            - host_redis
         environment:
             - WEB_PORT=80
             - WEB_HOST=0.0.0.0
             - MQ_URL=amqp://host_rmq
             - MQ_QUEUE=hello
-            - DB_HOST=0.0.0.0
-            - DB_PORT=3000
-            - DB_FILE=/app/data/db/db.json
-            - DB_HOST=http://host_nodejs
             - HOST=host_nodejs
+            - REDIS_HOST=host_redis
+            - REDIS_PORT=6379
         volumes:
             - ./host_nodejs/src/server:/app/server
-            - ./host_nodejs/data:/app/data
-        links:
-            - host_rmq

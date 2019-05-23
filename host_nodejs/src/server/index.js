@@ -1,13 +1,13 @@
 const webServer = require('./web');
 const sendMQ = require('./sendMQ');
 const receiveMQ = require('./receiveMQ');
-const dbServer = require('./db');
-const ModelMessage = require('./ModelMessage');
+//TODO requir redis
+const ModelMessage = require('./ModelMessageReddis');
 
 console.log(process.env);
 
 //process.env.DB_HOST
-const messageModel = new ModelMessage(process.env.DB_HOST, process.env.DB_PORT);
+const messageModel = new ModelMessageReddis(process.env.REDIS_HOST, process.env.REDIS_PORT);
 
 
 dbServer(process.env.DB_PORT, process.env.DB_FILE);
