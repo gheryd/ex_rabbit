@@ -13,7 +13,7 @@ services:
     host_redis:
         container_name: host_redis
         image: 'bitnami/redis:latest'
-        port: 
+        ports: 
             - 6379:6379
         expose:
             - 6379
@@ -30,7 +30,7 @@ services:
             # web page http://localhost:3001
             - 3001:80
         volumes:
-            - ./host_php/src:/var/www/host_php
+            - ./host_php/src:/var/www/host_php/src
             - ./host_php/docker/php.ini:/usr/local/etc/php/conf.d/custom.ini
             - ./host_php/docker/apache_host_php.conf:/etc/apache2/sites-enabled/host_php.conf
         depends_on:
@@ -52,8 +52,6 @@ services:
         ports:
             # db web page http://localhost:3002
             - 3002:80
-            # db json server http://localhost:3012
-            - 3012:3000
         expose:
             - 3000
         depends_on:

@@ -2,10 +2,10 @@
 
 define('BASE_PATH', __DIR__);
 define('PUBLIC_PATH', BASE_PATH.'/www');
-define('VENDOR_PATH', __DIR__."/vendor");
+define('VENDOR_PATH', __DIR__."/../vendor");
 
-define('DB_HOST', $_ENV['DB_HOST']);
-define('DB_PORT', $_ENV['DB_PORT']);
+define('REDIS_HOST', $_ENV['REDIS_HOST']);
+define('REDIS_PORT', $_ENV['REDIS_PORT']);
 define('MQ_HOST', $_ENV['MQ_HOST']);
 define('MQ_QUEUE', $_ENV['MQ_QUEUE']);
 define('MQ_PORT', $_ENV['MQ_PORT']);

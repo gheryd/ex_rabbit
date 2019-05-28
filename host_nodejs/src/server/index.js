@@ -1,16 +1,15 @@
 const webServer = require('./web');
 const sendMQ = require('./sendMQ');
 const receiveMQ = require('./receiveMQ');
-//TODO requir redis
-const ModelMessage = require('./ModelMessageReddis');
 
-console.log(process.env);
+const ModelMessageReddis = require('./ModelMessageReddis');
 
-//process.env.DB_HOST
-const messageModel = new ModelMessageReddis(process.env.REDIS_HOST, process.env.REDIS_PORT);
+console.log('Environment Params:', process.env);
 
-
-dbServer(process.env.DB_PORT, process.env.DB_FILE);
+const reddisKeyname = 'message logs';
+const messageModel = new ModelMessageReddis(process.env.REDIS_HOST, process.env.REDIS_PORT, reddisKeyname, (err)=>{
+    console.error("Error from ModelMessageReddis:", err);
+});
 
 
 webServer(process.env.WEB_HOST, process.env.WEB_PORT, messageModel, async function(msg){

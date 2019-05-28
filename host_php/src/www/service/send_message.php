@@ -1,15 +1,12 @@
 <?php
 
-require_once "../../config.php";
+require_once "config.php";
 
 
 $message = $_POST['message'];
 
 
 // ---------------------------------------------------
-
-
-$url = DB_HOST.":".DB_PORT."/messages";
 
 $dbRow = [ 
         "message" => $message, 
@@ -21,6 +18,19 @@ $dbRow = [
 $payload = http_build_query($dbRow);
 
 sendMessageMQ($message);
-sendReq($url, 'POST', $payload);
+//sendReq($url, 'POST', $payload);
+$redis = new Predis\Client([
+        'scheme' => 'tcp',
+        'host' => REDIS_HOST,
+        'port' => REDIS_PORT
+]);
 
-echo json_encode(['sent'=>$dbRow]);
+try{
+        $redis->rpush('message logs', json_encode($dbRow));
+        echo json_encode(['sent'=>$dbRow]);
+
+}catch(Predis\Connection\ConnectionException $e){
+        error_log($e);
+        echo json_encode(['error'=>$ex->getMessage()]);
+}
+
