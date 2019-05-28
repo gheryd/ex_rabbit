@@ -1,6 +1,12 @@
 const express = require('express');
 
 
+/**
+ * @param string
+ * @param int
+ * @param MessageModel
+ * @param function
+ */
 module.exports = function(host, port, messageModel, sendMessageCallback){
     const app = express();
 
@@ -26,9 +32,14 @@ module.exports = function(host, port, messageModel, sendMessageCallback){
         res.send( obj );    
     });
 
+    app.get('/service/clear_log', async (req, res) => {
+        const ok = messageModel.clear();
+        res.send( ok );
+    });
+
     app.listen(port, host);
 
-    console.log(`Running on http://${host}:${port}`)
+    console.log(`Running on http://${host}:${port}`);
 
 };
 

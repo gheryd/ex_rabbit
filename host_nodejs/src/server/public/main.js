@@ -6,6 +6,7 @@ $(function(){
 
     var msgForm = comps.msgForm($('#sendMessageForm'));
     var messageListComp = comps.messageList( $('#messageList') );
+    $autorefresh = $("#autorefreshCB");
     
     $("#refreshMessageList").click(()=>{
         $.ajax({
@@ -14,8 +15,22 @@ $(function(){
         }).done( (list)=> {
             messageListComp.setList(list);
         });
-    });
+    }).click();
 
+    $("#clearMessagesBtn").click(()=>{
+        $.ajax({
+            'url': '/service/clear_log',
+            method: 'GET'
+        }).done( (done) => {
+            console.log('log', done);
+            $("#refreshMessageList").click();
+        });
+    });
+    setInterval(()=>{
+        if($autorefresh.is(":checked")){
+            $("#refreshMessageList").click();
+        }
+    }, 5000);
 });
 
 
@@ -50,7 +65,7 @@ comps.messageList = function($table){
         $tbody.empty();
         list.forEach(item => {
             $tbody.append(
-                $("<tr>").append($('<td>').text(item.id) )
+                $("<tr>")
                 .append($('<td>').text(item.host) )
                 .append($('<td>').text(item.message) )
                 .append($('<td>').text(item.queue) )

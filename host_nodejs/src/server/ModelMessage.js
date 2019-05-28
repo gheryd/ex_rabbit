@@ -9,4 +9,8 @@ module.exports = class ModelMessage {
 
     }
 
+
+    async clear(){
+        
+    }
 }

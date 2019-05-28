@@ -23,7 +23,7 @@ module.exports = class ModelMessageReddis extends ModelMessage{
     async add(message, host, queue) {
         return new Promise(
             (resolve, reject) => {
-                console.log("add promise...");
+                console.log("Model: add promise...");
                 this.client.rpush([this.keyname, JSON.stringify(
                     { message, host, queue, date: new Date()}
                 )], (err, reply)=>{
@@ -42,7 +42,7 @@ module.exports = class ModelMessageReddis extends ModelMessage{
     async getAll(){
         return new Promise(
             (resolve, reject) => {
-                console.log("add promise...");
+                console.log("Model: add promise...");
                 this.client.lrange(this.keyname, 0, -1, function(err, list){
                     if(err){
                         console.error("getAll promise, reject err:", err);
@@ -51,6 +51,23 @@ module.exports = class ModelMessageReddis extends ModelMessage{
                         console.log("getAll promise, resolve list:", list);
                         const unserializedList = list.map(JSON.parse);
                         resolve(unserializedList);
+                    }
+                });
+            }
+        );
+    }
+
+    async clear(){
+        return new Promise(
+            (resolve, reject) => {
+                console.log("Model: clear promise...");
+                this.client.del(this.keyname, function(err, done){
+                    if(err){
+                        console.error("clear promise, reject error:", err);
+                        reject(err);
+                    }else {
+                        console.log("getAll promise, resolve list:", done);
+                        resolve(done);
                     }
                 });
             }

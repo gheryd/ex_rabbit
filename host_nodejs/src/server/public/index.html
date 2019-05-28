@@ -26,25 +26,29 @@
             <div class="col">
                 <div class="card">
                     <div class="card-header">
+                        <div class="form-check float-righ">
+                            <input class="form-check-input" type="checkbox" value="" id="autorefreshCB">
+                            <label class="form-check-label" for="autorefreshCB">
+                                auto refresh
+                            </label>
+                        </div>
                         <button id="refreshMessageList" class="btn btn-primary btn-sm float-right"><i class="fas fa-redo"></i></button>
-                        <span>message log</span>
+                        <button id="clearMessagesBtn" class="btn btn-danger btn-sm float-right"><i class="fas fa-trash"></i></button>
+                        <span>Message log</span>
                     </div>
-                    <div class="card-body">
-                        <table id="messageList" class="table table-sm table-dark table-striped table-hover" style="font-size:0.7em;">
-                            <thead>
-                                <tr>
-                                    <th>id</th>
-                                    <th>host</th>
-                                    <th>message</th>
-                                    <th>queue</th>
-                                    <th>date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-    
-                            </tbody>
-                        </table>
-                    </div>
+                    <table id="messageList" class="card-body table table-sm table-dark table-striped table-hover" style="font-size:0.7em;">
+                        <thead>
+                            <tr>
+                                <th>host</th>
+                                <th>message</th>
+                                <th>queue</th>
+                                <th>date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
                 </div>
                 
             </div>
