@@ -15,8 +15,6 @@ services:
         image: 'bitnami/redis:latest'
         ports: 
             - 6379:6379
-        expose:
-            - 6379
         #volumes:
             # redis persistence
             #- ./host_redis/data:/bitnami/redis/data
@@ -52,8 +50,6 @@ services:
         ports:
             # db web page http://localhost:3002
             - 3002:80
-        expose:
-            - 3000
         depends_on:
             - host_rmq
             - host_redis
